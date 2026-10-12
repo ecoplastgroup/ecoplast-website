@@ -1,0 +1,947 @@
+<!DOCTYPE html>
+<html lang="vi" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EcoPlast Group | Nhà Máy Tái Chế Nhựa REPLAST Long An</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            50: '#f0fdf4',
+                            100: '#dcfce7',
+                            200: '#bbf7d0',
+                            500: '#22c55e',
+                            600: '#16a34a',
+                            700: '#15803d',
+                            800: '#166534',
+                            900: '#14532d',
+                            950: '#052e16',
+                        },
+                        eco: {
+                            dark: '#0f291e',
+                            accent: '#10b981',
+                            leaf: '#059669',
+                            sand: '#f8faf9'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .gradient-hero {
+            background: linear-gradient(135deg, rgba(5, 46, 22, 0.92) 0%, rgba(15, 41, 30, 0.88) 100%), 
+                        url('https://images.unsplash.com/photo-1532996122724-e3c354a0b15b?auto=format&fit=crop&q=80&w=1920');
+            background-size: cover;
+            background-position: center;
+        }
+        .tab-content {
+            display: none;
+            opacity: 0;
+            transition: opacity 0.3s ease-in-out;
+        }
+        .tab-content.active {
+            display: block;
+            opacity: 1;
+        }
+        .nav-link.active-link {
+            color: #10b981;
+            font-weight: 600;
+            border-bottom: 2px solid #10b981;
+        }
+    </style>
+</head>
+<body class="bg-eco-sand text-slate-800 font-sans antialiased flex flex-col min-h-screen">
+
+    <!-- NAVIGATION BAR -->
+    <header class="sticky top-0 z-40 bg-slate-900/95 backdrop-blur border-b border-brand-900/50 text-white shadow-lg">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+                <!-- Logo -->
+                <div class="flex items-center space-x-3 cursor-pointer" onclick="switchTab('home')">
+                    <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-brand-500 to-eco-leaf flex items-center justify-center text-white font-bold text-xl shadow-md shadow-brand-500/20">
+                        <i data-lucide="recycle" class="w-6 h-6"></i>
+                    </div>
+                    <div>
+                        <span class="text-xl font-bold tracking-tight text-white block">EcoPlast<span class="text-eco-accent">Group</span></span>
+                        <span class="text-[10px] text-brand-200 tracking-wider uppercase block">Dự án Nhà máy REPLAST</span>
+                    </div>
+                </div>
+
+                <!-- Desktop Menu -->
+                <nav class="hidden md:flex space-x-8 text-sm font-medium">
+                    <button onclick="switchTab('home')" id="nav-home" class="nav-link text-slate-300 hover:text-eco-accent py-2 transition-colors active-link">Trang Chủ</button>
+                    <button onclick="switchTab('about')" id="nav-about" class="nav-link text-slate-300 hover:text-eco-accent py-2 transition-colors">Giới Thiệu</button>
+                    <button onclick="switchTab('products')" id="nav-products" class="nav-link text-slate-300 hover:text-eco-accent py-2 transition-colors">Sản Phẩm rPET/rHDPE</button>
+                    <button onclick="switchTab('services')" id="nav-services" class="nav-link text-slate-300 hover:text-eco-accent py-2 transition-colors">Dịch Vụ & EPR</button>
+                    <button onclick="switchTab('contact')" id="nav-contact" class="nav-link text-slate-300 hover:text-eco-accent py-2 transition-colors">Tin Tức & Liên Hệ</button>
+                </nav>
+
+                <!-- Header CTA Button -->
+                <div class="hidden lg:flex items-center space-x-4">
+                    <button onclick="openModal('rPET')" class="bg-gradient-to-r from-brand-600 to-eco-accent text-white hover:from-brand-500 hover:to-brand-400 px-5 py-2.5 rounded-lg font-medium text-sm transition shadow-md shadow-brand-900/30 flex items-center space-x-2">
+                        <i data-lucide="send" class="w-4 h-4"></i>
+                        <span>Yêu Cầu Mẫu Thử</span>
+                    </button>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <div class="md:hidden flex items-center">
+                    <button id="mobile-menu-btn" onclick="toggleMobileMenu()" class="text-slate-300 hover:text-white p-2">
+                        <i data-lucide="menu" class="w-6 h-6"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Menu Dropdown -->
+        <div id="mobile-menu" class="hidden md:hidden bg-slate-900 border-b border-slate-800 px-4 pt-2 pb-6 space-y-3">
+            <button onclick="switchTab('home')" class="block w-full text-left py-2 text-slate-200 hover:text-eco-accent border-b border-slate-800">Trang Chủ</button>
+            <button onclick="switchTab('about')" class="block w-full text-left py-2 text-slate-200 hover:text-eco-accent border-b border-slate-800">Giới Thiệu</button>
+            <button onclick="switchTab('products')" class="block w-full text-left py-2 text-slate-200 hover:text-eco-accent border-b border-slate-800">Sản Phẩm rPET/rHDPE</button>
+            <button onclick="switchTab('services')" class="block w-full text-left py-2 text-slate-200 hover:text-eco-accent border-b border-slate-800">Dịch Vụ & EPR</button>
+            <button onclick="switchTab('contact')" class="block w-full text-left py-2 text-slate-200 hover:text-eco-accent">Tin Tức & Liên Hệ</button>
+            <button onclick="openModal('Tổng quan B2B')" class="w-full mt-2 bg-brand-600 text-white py-2.5 rounded-lg text-center font-medium">Yêu Cầu Mẫu Thử B2B</button>
+        </div>
+    </header>
+
+    <!-- MAIN CONTENT AREA -->
+    <main class="flex-grow">
+
+        <!-- ================= TAB 1: TRANG CHỦ ================= -->
+        <section id="tab-home" class="tab-content active">
+            <!-- Hero Banner -->
+            <div class="gradient-hero text-white py-24 lg:py-32 relative">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <div class="max-w-3xl">
+                        <div class="inline-flex items-center space-x-2 bg-brand-500/20 backdrop-blur border border-brand-400/30 text-eco-accent px-3.5 py-1.5 rounded-full text-xs font-semibold uppercase tracking-wider mb-6">
+                            <i data-lucide="leaf" class="w-3.5 h-3.5"></i>
+                            <span>Giải Pháp Tái Chế Nhựa B2B Tiêu Chuẩn Quốc Tế</span>
+                        </div>
+                        <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold leading-tight tracking-tight mb-6">
+                            Kiến tạo vòng đời mới cho nhựa, đồng hành cùng chiến lược phát triển bền vững
+                        </h1>
+                        <p class="text-lg sm:text-xl text-slate-200 mb-8 font-light leading-relaxed">
+                            EcoPlast Group đầu tư Nhà máy REPLAST tại Long An với công suất <strong class="text-eco-accent font-semibold">15.000 tấn/năm</strong>. Chuyên cung ứng hạt nhựa tái sinh <strong class="text-white font-semibold">rPET & rHDPE</strong> độ tinh khiết cao cho các tập đoàn FMCG và doanh nghiệp xuất khẩu.
+                        </p>
+                        <div class="flex flex-col sm:flex-row gap-4">
+                            <button onclick="switchTab('products')" class="bg-brand-600 hover:bg-brand-500 text-white px-8 py-3.5 rounded-xl font-semibold text-base transition shadow-lg shadow-brand-900/50 flex items-center justify-center space-x-2">
+                                <span>Khám Phá Sản Phẩm</span>
+                                <i data-lucide="arrow-right" class="w-5 h-5"></i>
+                            </button>
+                            <button onclick="switchTab('about')" class="bg-slate-800/80 hover:bg-slate-800 border border-slate-700 text-slate-200 px-8 py-3.5 rounded-xl font-semibold text-base transition flex items-center justify-center space-x-2">
+                                <i data-lucide="factory" class="w-5 h-5"></i>
+                                <span>Dự Án REPLAST</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Key Metrics Section -->
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-12 relative z-10">
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <div class="bg-white p-6 rounded-2xl shadow-xl border border-slate-100 hover:border-brand-300 transition duration-300">
+                        <div class="w-12 h-12 bg-brand-100 text-brand-700 rounded-xl flex items-center justify-center mb-4">
+                            <i data-lucide="gauge" class="w-6 h-6"></i>
+                        </div>
+                        <h3 class="text-3xl font-bold text-slate-900 mb-1">15.000 <span class="text-base font-normal text-slate-500">tấn/năm</span></h3>
+                        <p class="text-sm font-medium text-slate-600">Công suất thiết kế giai đoạn 1</p>
+                        <p class="text-xs text-slate-400 mt-2">Đảm bảo nguồn cung ổn định cho hợp đồng B2B dài hạn.</p>
+                    </div>
+
+                    <div class="bg-white p-6 rounded-2xl shadow-xl border border-slate-100 hover:border-brand-300 transition duration-300">
+                        <div class="w-12 h-12 bg-brand-100 text-brand-700 rounded-xl flex items-center justify-center mb-4">
+                            <i data-lucide="map-pin" class="w-6 h-6"></i>
+                        </div>
+                        <h3 class="text-3xl font-bold text-slate-900 mb-1">20.000 <span class="text-base font-normal text-slate-500">m²</span></h3>
+                        <p class="text-sm font-medium text-slate-600">Diện tích nhà máy chuẩn quy hoạch</p>
+                        <p class="text-xs text-slate-400 mt-2">Tọa lạc tại CCN Nhựa Đức Hòa Hạ, Đức Hòa, Long An.</p>
+                    </div>
+
+                    <div class="bg-white p-6 rounded-2xl shadow-xl border border-slate-100 hover:border-brand-300 transition duration-300">
+                        <div class="w-12 h-12 bg-brand-100 text-brand-700 rounded-xl flex items-center justify-center mb-4">
+                            <i data-lucide="users" class="w-6 h-6"></i>
+                        </div>
+                        <h3 class="text-3xl font-bold text-slate-900 mb-1">80 - 100</h3>
+                        <p class="text-sm font-medium text-slate-600">Nhân sự kỹ thuật & vận hành</p>
+                        <p class="text-xs text-slate-400 mt-2">Đội ngũ chuyên gia giàu kinh nghiệm ngành bao bì & tái chế.</p>
+                    </div>
+
+                    <div class="bg-white p-6 rounded-2xl shadow-xl border border-slate-100 hover:border-brand-300 transition duration-300">
+                        <div class="w-12 h-12 bg-brand-100 text-brand-700 rounded-xl flex items-center justify-center mb-4">
+                            <i data-lucide="shield-check" class="w-6 h-6"></i>
+                        </div>
+                        <h3 class="text-3xl font-bold text-slate-900 mb-1">Mô hình B2B</h3>
+                        <p class="text-sm font-medium text-slate-600">Đáp ứng chuẩn xuất khẩu & EPR</p>
+                        <p class="text-xs text-slate-400 mt-2">Hỗ trợ doanh nghiệp FMCG tối ưu hóa chứng nhận xanh.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Overview Section -->
+            <div class="py-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                    <div>
+                        <span class="text-brand-600 font-semibold text-sm uppercase tracking-wider">Về Dự Án REPLAST</span>
+                        <h2 class="text-3xl sm:text-4xl font-bold text-slate-900 mt-2 mb-6 leading-tight">Giải pháp tuần hoàn nhựa tiên phong tại vùng kinh tế trọng điểm phía Nam</h2>
+                        <p class="text-slate-600 mb-4 leading-relaxed">
+                            Nhà máy tái chế nhựa REPLAST được EcoPlast Group đầu tư bài bản tại Cụm công nghiệp Nhựa Đức Hòa Hạ, Long An. Dự án ứng dụng dây chuyền công nghệ băm rửa sinh học và đùn hạt nhựa hiện đại, giải quyết trọn vẹn bài toán phế liệu nhựa nội địa.
+                        </p>
+                        <p class="text-slate-600 mb-6 leading-relaxed">
+                            Chúng tôi tập trung sản xuất dòng hạt nhựa tái sinh chất lượng cao **rPET** và **rHDPE** có thông số kỹ thuật đồng nhất, tỷ lệ tạp chất thấp (&lt; 50 ppm), phục vụ trực tiếp ngành sản xuất bao bì thực phẩm, hóa mỹ phẩm và hàng xuất khẩu đi thị trường Mỹ, Châu Âu.
+                        </p>
+                        
+                        <div class="space-y-3 mb-8">
+                            <div class="flex items-start space-x-3">
+                                <div class="mt-1 bg-brand-100 text-brand-700 p-1 rounded-full"><i data-lucide="check" class="w-4 h-4"></i></div>
+                                <span class="text-slate-700 font-medium">Hệ thống phân loại quang học tách màu và khử tạp chất triệt để.</span>
+                            </div>
+                            <div class="flex items-start space-x-3">
+                                <div class="mt-1 bg-brand-100 text-brand-700 p-1 rounded-full"><i data-lucide="check" class="w-4 h-4"></i></div>
+                                <span class="text-slate-700 font-medium">Quy trình xử lý nước thải tuần hoàn khép kín đạt tiêu chuẩn môi trường.</span>
+                            </div>
+                            <div class="flex items-start space-x-3">
+                                <div class="mt-1 bg-brand-100 text-brand-700 p-1 rounded-full"><i data-lucide="check" class="w-4 h-4"></i></div>
+                                <span class="text-slate-700 font-medium">Đồng hành cùng doanh nghiệp hoàn thiện nghĩa vụ EPR và chứng chỉ Carbon.</span>
+                            </div>
+                        </div>
+
+                        <button onclick="switchTab('about')" class="inline-flex items-center space-x-2 text-brand-700 font-semibold hover:text-brand-800">
+                            <span>Xem chi tiết quy hoạch nhà máy REPLAST</span>
+                            <i data-lucide="chevron-right" class="w-5 h-5"></i>
+                        </button>
+                    </div>
+
+                    <div class="relative">
+                        <div class="rounded-3xl overflow-hidden shadow-2xl border-4 border-white">
+                            <img src="https://images.unsplash.com/photo-1588600036041-9492167d498d?auto=format&fit=crop&q=80&w=1000" alt="Nhà máy REPLAST" class="w-full h-[450px] object-cover">
+                        </div>
+                        <div class="absolute -bottom-6 -left-6 bg-slate-900 text-white p-6 rounded-2xl shadow-xl max-w-xs border border-slate-800">
+                            <div class="flex items-center space-x-3 mb-2">
+                                <i data-lucide="award" class="w-8 h-8 text-eco-accent"></i>
+                                <span class="font-bold text-lg">Cam Kết Chất Lượng</span>
+                            </div>
+                            <p class="text-xs text-slate-300">Đạt tiêu chuẩn kiểm định độ tinh khiết khắt khe từ các tổ chức quốc tế.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Core Values Section -->
+            <div class="bg-slate-900 text-white py-20">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <div class="text-center max-w-3xl mx-auto mb-16">
+                        <span class="text-eco-accent font-semibold text-sm uppercase tracking-wider">Giá Trị Cốt Lõi</span>
+                        <h2 class="text-3xl font-bold mt-2">Tại sao các tập đoàn FMCG chọn EcoPlast Group?</h2>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                        <div class="bg-slate-800/60 p-8 rounded-2xl border border-slate-700/60 hover:border-brand-500 transition">
+                            <div class="w-14 h-14 bg-brand-900/80 text-eco-accent rounded-xl flex items-center justify-center mb-6">
+                                <i data-lucide="cpu" class="w-7 h-7"></i>
+                            </div>
+                            <h3 class="text-xl font-bold mb-3">Công Nghệ Tái Chế Tiên Tiến</h3>
+                            <p class="text-slate-300 text-sm leading-relaxed">Đầu tư bài bản cho thiết bị đùn lọc và băm rửa. Hạt nhựa rPET/rHDPE ra đời có tính chất lý hóa tiệm cận nhựa nguyên sinh.</p>
+                        </div>
+
+                        <div class="bg-slate-800/60 p-8 rounded-2xl border border-slate-700/60 hover:border-brand-500 transition">
+                            <div class="w-14 h-14 bg-brand-900/80 text-eco-accent rounded-xl flex items-center justify-center mb-6">
+                                <i data-lucide="file-check-2" class="w-7 h-7"></i>
+                            </div>
+                            <h3 class="text-xl font-bold mb-3">Minh Bạch Pháp Lý & EPR</h3>
+                            <p class="text-slate-300 text-sm leading-relaxed">Hồ sơ pháp lý, Giấy phép Môi trường đầy đủ. Đảm bảo quy trình truy xuất nguồn gốc rõ ràng cho nghĩa vụ EPR của đối tác.</p>
+                        </div>
+
+                        <div class="bg-slate-800/60 p-8 rounded-2xl border border-slate-700/60 hover:border-brand-500 transition">
+                            <div class="w-14 h-14 bg-brand-900/80 text-eco-accent rounded-xl flex items-center justify-center mb-6">
+                                <i data-lucide="truck" class="w-7 h-7"></i>
+                            </div>
+                            <h3 class="text-xl font-bold mb-3">Nguồn Cung Ổn Định B2B</h3>
+                            <p class="text-slate-300 text-sm leading-relaxed">Công suất 15.000 tấn/năm kết hợp mạng lưới thu gom rộng khắp giúp đảm bảo sản lượng giao hàng ổn định quanh năm.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= TAB 2: GIỚI THIỆU ================= -->
+        <section id="tab-about" class="tab-content py-16">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <!-- Header -->
+                <div class="text-center max-w-3xl mx-auto mb-16">
+                    <span class="text-brand-600 font-semibold text-sm uppercase tracking-wider">Hồ Sơ Năng Lực</span>
+                    <h1 class="text-4xl font-extrabold text-slate-900 mt-2 mb-4">Giới Thiệu EcoPlast Group & Dự Án REPLAST</h1>
+                    <p class="text-slate-600 text-lg">Gần nửa thập kỷ tích lũy kinh nghiệm trong ngành bao bì công nghiệp, phát triển hạ tầng tái chế hiện đại tại Long An.</p>
+                </div>
+
+                <!-- History Section -->
+                <div class="bg-white rounded-3xl p-8 sm:p-12 shadow-sm border border-slate-200/80 mb-16">
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+                        <div>
+                            <h2 class="text-2xl font-bold text-slate-900 mb-4">Hành Trình Tận Tâm Vì Môi Trường</h2>
+                            <p class="text-slate-600 mb-4 leading-relaxed">
+                                Được thành lập bởi những chuyên gia giàu tâm huyết trong ngành vật liệu bao bì, **EcoPlast Group** nhanh chóng khẳng định vị thế thông qua việc thấu hiểu sâu sắc chuỗi cung ứng nhựa và các tiêu chuẩn kiểm định nghiêm ngặt từ thị trường xuất khẩu.
+                            </p>
+                            <p class="text-slate-600 leading-relaxed">
+                                Nhận thức rõ xu hướng tiêu dùng xanh và định hướng Luật Bảo vệ Môi trường Việt Nam (nghĩa vụ EPR), EcoPlast Group đã quyết định đầu tư trọng điểm vào **Dự án Nhà máy tái chế nhựa REPLAST** tại CCN Nhựa Đức Hòa Hạ, Long An.
+                            </p>
+                        </div>
+                        <div class="bg-brand-50 p-8 rounded-2xl border border-brand-100">
+                            <h3 class="text-xl font-bold text-brand-900 mb-4 flex items-center space-x-2">
+                                <i data-lucide="target" class="w-6 h-6 text-brand-600"></i>
+                                <span>Tầm Nhìn Đến Năm 2030</span>
+                            </h3>
+                            <p class="text-slate-700 mb-4 text-sm leading-relaxed">
+                                Trở thành một trong những nhà sản xuất hạt nhựa tái sinh uy tín hàng đầu khu vực Đông Nam Á, góp phần giảm thiểu hàng trăm ngàn tấn rác thải nhựa ra môi trường mỗi năm.
+                            </p>
+                            <div class="border-t border-brand-200/60 pt-4 flex justify-between text-sm font-semibold text-brand-800">
+                                <span>Mô hình: Kinh tế tuần hoàn B2B</span>
+                                <span>Tiêu chuẩn: ISO & FDA/EFSA ready</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Factory Blueprint Section -->
+                <div class="mb-16">
+                    <div class="text-center mb-12">
+                        <h2 class="text-3xl font-bold text-slate-900">Quy Hoạch Tổng Thể Nhà Máy REPLAST</h2>
+                        <p class="text-slate-600 mt-2">Tổng diện tích <strong class="text-brand-700">20.000 m²</strong> tại CCN Nhựa Đức Hòa Hạ, xã Đức Hòa Hạ, huyện Đức Hòa, tỉnh Long An</p>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition">
+                            <div class="flex items-center justify-between mb-4">
+                                <span class="w-10 h-10 rounded-lg bg-emerald-100 text-emerald-800 font-bold flex items-center justify-center">01</span>
+                                <span class="text-xs font-semibold bg-slate-100 text-slate-600 px-2.5 py-1 rounded-full">5.000 m²</span>
+                            </div>
+                            <h3 class="text-lg font-bold text-slate-900 mb-2">Kho Nguyên Liệu Đầu Vào</h3>
+                            <p class="text-slate-600 text-sm">Khu vực phân loại, ép kiện phế liệu nhựa PET và HDPE thu gom từ hệ thống đối tác uy tín.</p>
+                        </div>
+
+                        <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition">
+                            <div class="flex items-center justify-between mb-4">
+                                <span class="w-10 h-10 rounded-lg bg-emerald-100 text-emerald-800 font-bold flex items-center justify-center">02</span>
+                                <span class="text-xs font-semibold bg-slate-100 text-slate-600 px-2.5 py-1 rounded-full">4.000 m²</span>
+                            </div>
+                            <h3 class="text-lg font-bold text-slate-900 mb-2">Xưởng Băm Rửa & Sấy Tự Động</h3>
+                            <p class="text-slate-600 text-sm">Hệ thống băm rửa nhiều cấp kết hợp công nghệ phân loại quang học tách nhãn và chất bẩn.</p>
+                        </div>
+
+                        <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition">
+                            <div class="flex items-center justify-between mb-4">
+                                <span class="w-10 h-10 rounded-lg bg-emerald-100 text-emerald-800 font-bold flex items-center justify-center">03</span>
+                                <span class="text-xs font-semibold bg-slate-100 text-slate-600 px-2.5 py-1 rounded-full">4.000 m²</span>
+                            </div>
+                            <h3 class="text-lg font-bold text-slate-900 mb-2">Xưởng Đùn Tái Sinh rPET/rHDPE</h3>
+                            <p class="text-slate-600 text-sm">Dây chuyền đùn lọc kép chân không cao cấp, tạo hạt đồng đều, kiểm soát chỉ số IV và MFI chuẩn xác.</p>
+                        </div>
+
+                        <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition">
+                            <div class="flex items-center justify-between mb-4">
+                                <span class="w-10 h-10 rounded-lg bg-emerald-100 text-emerald-800 font-bold flex items-center justify-center">04</span>
+                                <span class="text-xs font-semibold bg-slate-100 text-slate-600 px-2.5 py-1 rounded-full">3.000 m²</span>
+                            </div>
+                            <h3 class="text-lg font-bold text-slate-900 mb-2">Kho Thành Phẩm & Bãi Xuất Hàng</h3>
+                            <p class="text-slate-600 text-sm">Kho hàng đạt chuẩn bao gói, bảo quản khô ráo, sẵn sàng đóng container cho xe tải B2B chuyên dụng.</p>
+                        </div>
+
+                        <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition">
+                            <div class="flex items-center justify-between mb-4">
+                                <span class="w-10 h-10 rounded-lg bg-emerald-100 text-emerald-800 font-bold flex items-center justify-center">05</span>
+                                <span class="text-xs font-semibold bg-slate-100 text-slate-600 px-2.5 py-1 rounded-full">2.000 m²</span>
+                            </div>
+                            <h3 class="text-lg font-bold text-slate-900 mb-2">Xử Lý Nước Thải Tuần Hoàn</h3>
+                            <p class="text-slate-600 text-sm">Hệ thống xử lý nước hiện đại, tái sử dụng trên 85% lượng nước phục vụ băm rửa, bảo vệ môi trường.</p>
+                        </div>
+
+                        <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition">
+                            <div class="flex items-center justify-between mb-4">
+                                <span class="w-10 h-10 rounded-lg bg-emerald-100 text-emerald-800 font-bold flex items-center justify-center">06</span>
+                                <span class="text-xs font-semibold bg-slate-100 text-slate-600 px-2.5 py-1 rounded-full">2.000 m²</span>
+                            </div>
+                            <h3 class="text-lg font-bold text-slate-900 mb-2">Khu Điều Hành & Phòng Lab R&D</h3>
+                            <p class="text-slate-600 text-sm">Trung tâm thử nghiệm chất lượng sản phẩm, kiểm tra độ nhớt, độ kéo và tạp chất trước khi xuất xưởng.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= TAB 3: SẢN PHẨM ================= -->
+        <section id="tab-products" class="tab-content py-16">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center max-w-3xl mx-auto mb-16">
+                    <span class="text-brand-600 font-semibold text-sm uppercase tracking-wider">Danh Mục Sản Phẩm</span>
+                    <h1 class="text-4xl font-extrabold text-slate-900 mt-2 mb-4">Hạt Nhựa Tái Sinh Chất Lượng Cao</h1>
+                    <p class="text-slate-600 text-lg">Cung cấp giải pháp vật liệu xanh đồng nhất về chất lượng, phục vụ sản xuất bao bì FMCG và hàng xuất khẩu.</p>
+                </div>
+
+                <!-- Product 1: rPET -->
+                <div class="bg-white rounded-3xl border border-slate-200 shadow-md overflow-hidden mb-12">
+                    <div class="grid grid-cols-1 lg:grid-cols-12 gap-0">
+                        <div class="lg:col-span-5 relative bg-slate-100">
+                            <img src="https://images.unsplash.com/photo-1605600659873-d808a13e4d2a?auto=format&fit=crop&q=80&w=800" alt="Hạt nhựa rPET" class="w-full h-full object-cover min-h-[320px]">
+                            <div class="absolute top-4 left-4 bg-brand-600 text-white text-xs font-bold px-3 py-1.5 rounded-full uppercase tracking-wider">
+                                Sản Phẩm Chủ Lực
+                            </div>
+                        </div>
+                        <div class="lg:col-span-7 p-8 sm:p-10 flex flex-col justify-between">
+                            <div>
+                                <h2 class="text-3xl font-bold text-slate-900 mb-3">Hạt Nhựa Tái Sinh rPET</h2>
+                                <p class="text-slate-600 mb-6 leading-relaxed">
+                                    Được tái chế từ vỏ chai PET trong suốt qua quy trình băm rửa tiệt trùng và đùn hạt hiện đại. Hạt nhựa rPET của REPLAST đảm bảo độ trong, độ sạch vượt trội, sẵn sàng cho công đoạn thổi phôi chai và cán màng bao bì.
+                                </p>
+
+                                <!-- Specs Table -->
+                                <div class="bg-slate-50 rounded-2xl p-5 border border-slate-200/80 mb-6">
+                                    <h4 class="text-xs font-bold uppercase tracking-wider text-slate-500 mb-3">Thông Số Kỹ Thuật Tiêu Chuẩn</h4>
+                                    <div class="grid grid-cols-2 sm:grid-cols-3 gap-4 text-sm">
+                                        <div>
+                                            <span class="text-slate-400 block text-xs">Độ nhớt (IV)</span>
+                                            <span class="font-bold text-slate-800">0.72 - 0.84 dl/g</span>
+                                        </div>
+                                        <div>
+                                            <span class="text-slate-400 block text-xs">Tạp chất</span>
+                                            <span class="font-bold text-slate-800">&lt; 50 ppm</span>
+                                        </div>
+                                        <div>
+                                            <span class="text-slate-400 block text-xs">Màu sắc</span>
+                                            <span class="font-bold text-slate-800">Trong suốt / Xanh nhẹ</span>
+                                        </div>
+                                        <div>
+                                            <span class="text-slate-400 block text-xs">Độ ẩm</span>
+                                            <span class="font-bold text-slate-800">&lt; 1.0 %</span>
+                                        </div>
+                                        <div>
+                                            <span class="text-slate-400 block text-xs">Đóng gói</span>
+                                            <span class="font-bold text-slate-800">Jumbo Bag 1.000 kg</span>
+                                        </div>
+                                        <div>
+                                            <span class="text-slate-400 block text-xs">Điểm nóng chảy</span>
+                                            <span class="font-bold text-slate-800">245 - 255 °C</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <h4 class="text-sm font-bold text-slate-900 mb-2">Ứng dụng phù hợp:</h4>
+                                <div class="flex flex-wrap gap-2 mb-8">
+                                    <span class="bg-emerald-50 text-emerald-800 border border-emerald-200 text-xs px-3 py-1 rounded-md font-medium">Phôi chai nước uống</span>
+                                    <span class="bg-emerald-50 text-emerald-800 border border-emerald-200 text-xs px-3 py-1 rounded-md font-medium">Chai bao bì hóa mỹ phẩm</span>
+                                    <span class="bg-emerald-50 text-emerald-800 border border-emerald-200 text-xs px-3 py-1 rounded-md font-medium">Khay thực phẩm định hình</span>
+                                    <span class="bg-emerald-50 text-emerald-800 border border-emerald-200 text-xs px-3 py-1 rounded-md font-medium">Sợi Dệt Polyester xuất khẩu</span>
+                                </div>
+                            </div>
+
+                            <div class="pt-4 border-t border-slate-100 flex items-center justify-between">
+                                <span class="text-sm text-slate-500">Mã SP: <strong class="text-slate-700">REPLAST-rPET-01</strong></span>
+                                <button onclick="openModal('Hạt nhựa rPET')" class="bg-brand-600 hover:bg-brand-700 text-white px-6 py-2.5 rounded-xl font-medium text-sm transition flex items-center space-x-2">
+                                    <i data-lucide="file-text" class="w-4 h-4"></i>
+                                    <span>Yêu Cầu Mẫu & Báo Giá</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product 2: rHDPE -->
+                <div class="bg-white rounded-3xl border border-slate-200 shadow-md overflow-hidden mb-12">
+                    <div class="grid grid-cols-1 lg:grid-cols-12 gap-0">
+                        <div class="lg:col-span-5 relative bg-slate-100">
+                            <img src="https://images.unsplash.com/photo-1591193686104-fdeba4d03c88?auto=format&fit=crop&q=80&w=800" alt="Hạt nhựa rHDPE" class="w-full h-full object-cover min-h-[320px]">
+                        </div>
+                        <div class="lg:col-span-7 p-8 sm:p-10 flex flex-col justify-between">
+                            <div>
+                                <h2 class="text-3xl font-bold text-slate-900 mb-3">Hạt Nhựa Tái Sinh rHDPE</h2>
+                                <p class="text-slate-600 mb-6 leading-relaxed">
+                                    Hạt nhựa tái sinh High-Density Polyethylene chịu va đập tốt, độ bền cơ học cao và kháng hóa chất tối ưu. Được kiểm soát chặt chẽ chỉ số chảy MFI phù hợp cho công nghệ thổi can, ép phun nắp chai và phụ kiện công nghiệp.
+                                </p>
+
+                                <!-- Specs Table -->
+                                <div class="bg-slate-50 rounded-2xl p-5 border border-slate-200/80 mb-6">
+                                    <h4 class="text-xs font-bold uppercase tracking-wider text-slate-500 mb-3">Thông Số Kỹ Thuật Tiêu Chuẩn</h4>
+                                    <div class="grid grid-cols-2 sm:grid-cols-3 gap-4 text-sm">
+                                        <div>
+                                            <span class="text-slate-400 block text-xs">Chỉ số chảy (MFI)</span>
+                                            <span class="font-bold text-slate-800">0.7 - 2.0 g/10min</span>
+                                        </div>
+                                        <div>
+                                            <span class="text-slate-400 block text-xs">Tỷ trọng</span>
+                                            <span class="font-bold text-slate-800">0.95 - 0.96 g/cm³</span>
+                                        </div>
+                                        <div>
+                                            <span class="text-slate-400 block text-xs">Màu sắc</span>
+                                            <span class="font-bold text-slate-800">Trắng tự nhiên / Đen / Xanh</span>
+                                        </div>
+                                        <div>
+                                            <span class="text-slate-400 block text-xs">Kháng hóa chất</span>
+                                            <span class="font-bold text-slate-800">Rất tốt</span>
+                                        </div>
+                                        <div>
+                                            <span class="text-slate-400 block text-xs">Đóng gói</span>
+                                            <span class="font-bold text-slate-800">Bao 25kg / Jumbo Bag</span>
+                                        </div>
+                                        <div>
+                                            <span class="text-slate-400 block text-xs">Khả năng gia công</span>
+                                            <span class="font-bold text-slate-800">Thổi chai / Ép phun</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <h4 class="text-sm font-bold text-slate-900 mb-2">Ứng dụng phù hợp:</h4>
+                                <div class="flex flex-wrap gap-2 mb-8">
+                                    <span class="bg-emerald-50 text-emerald-800 border border-emerald-200 text-xs px-3 py-1 rounded-md font-medium">Can chứa hóa chất & dầu nhớt</span>
+                                    <span class="bg-emerald-50 text-emerald-800 border border-emerald-200 text-xs px-3 py-1 rounded-md font-medium">Chai lọ chất tẩy rửa gia dụng</span>
+                                    <span class="bg-emerald-50 text-emerald-800 border border-emerald-200 text-xs px-3 py-1 rounded-md font-medium">Pallet nhựa & Thùng nhựa</span>
+                                    <span class="bg-emerald-50 text-emerald-800 border border-emerald-200 text-xs px-3 py-1 rounded-md font-medium">Nắp chai & Ống nhựa kỹ thuật</span>
+                                </div>
+                            </div>
+
+                            <div class="pt-4 border-t border-slate-100 flex items-center justify-between">
+                                <span class="text-sm text-slate-500">Mã SP: <strong class="text-slate-700">REPLAST-rHDPE-02</strong></span>
+                                <button onclick="openModal('Hạt nhựa rHDPE')" class="bg-brand-600 hover:bg-brand-700 text-white px-6 py-2.5 rounded-xl font-medium text-sm transition flex items-center space-x-2">
+                                    <i data-lucide="file-text" class="w-4 h-4"></i>
+                                    <span>Yêu Cầu Mẫu & Báo Giá</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= TAB 4: DỊCH VỤ & EPR ================= -->
+        <section id="tab-services" class="tab-content py-16">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center max-w-3xl mx-auto mb-16">
+                    <span class="text-brand-600 font-semibold text-sm uppercase tracking-wider">Giải Pháp Doanh Nghiệp</span>
+                    <h1 class="text-4xl font-extrabold text-slate-900 mt-2 mb-4">Dịch Vụ Cung Ứng & Tư Vấn EPR</h1>
+                    <p class="text-slate-600 text-lg">Đồng hành cùng các tập đoàn FMCG trong lộ trình chuyển đổi xanh và tuân thủ trách nhiệm mở rộng của nhà sản xuất.</p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
+                    <div class="bg-white p-8 rounded-2xl border border-slate-200 shadow-sm">
+                        <div class="w-12 h-12 bg-emerald-100 text-emerald-700 rounded-xl flex items-center justify-center mb-6">
+                            <i data-lucide="handshake" class="w-6 h-6"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-slate-900 mb-3">Hợp Đồng Hợp Tác Cung Ứng Dài Hạn</h3>
+                        <p class="text-slate-600 text-sm leading-relaxed mb-4">
+                            EcoPlast Group cam kết giữ mức giá ổn định và ưu tiên sản lượng theo khung hợp đồng dài hạn (1 - 3 năm) cho các đối tác sản xuất lớn.
+                        </p>
+                        <ul class="text-xs text-slate-500 space-y-2">
+                            <li class="flex items-center space-x-1.5"><i data-lucide="check-circle" class="w-3.5 h-3.5 text-brand-600"></i><span>Giao hàng đúng tiến độ</span></li>
+                            <li class="flex items-center space-x-1.5"><i data-lucide="check-circle" class="w-3.5 h-3.5 text-brand-600"></i><span>Đồng nhất thông số kỹ thuật</span></li>
+                        </ul>
+                    </div>
+
+                    <div class="bg-white p-8 rounded-2xl border border-slate-200 shadow-sm">
+                        <div class="w-12 h-12 bg-emerald-100 text-emerald-700 rounded-xl flex items-center justify-center mb-6">
+                            <i data-lucide="shield-alert" class="w-6 h-6"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-slate-900 mb-3">Giải Pháp Báo Cáo Tuân Thủ EPR</h3>
+                        <p class="text-slate-600 text-sm leading-relaxed mb-4">
+                            Hỗ trợ doanh nghiệp thu thập dữ liệu, chứng nhận tỷ lệ vật liệu tái chế (PCR) trong bao bì để nộp báo cáo cho Quỹ Bảo vệ Môi trường Việt Nam.
+                        </p>
+                        <ul class="text-xs text-slate-500 space-y-2">
+                            <li class="flex items-center space-x-1.5"><i data-lucide="check-circle" class="w-3.5 h-3.5 text-brand-600"></i><span>Truy xuất nguồn gốc minh bạch</span></li>
+                            <li class="flex items-center space-x-1.5"><i data-lucide="check-circle" class="w-3.5 h-3.5 text-brand-600"></i><span>Hồ sơ pháp lý tiêu chuẩn</span></li>
+                        </ul>
+                    </div>
+
+                    <div class="bg-white p-8 rounded-2xl border border-slate-200 shadow-sm">
+                        <div class="w-12 h-12 bg-emerald-100 text-emerald-700 rounded-xl flex items-center justify-center mb-6">
+                            <i data-lucide="footprints" class="w-6 h-6"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-slate-900 mb-3">Tối Ưu Dấu Chân Carbon (LCA)</h3>
+                        <p class="text-slate-600 text-sm leading-relaxed mb-4">
+                            Cung cấp chỉ số giảm phát thải khí nhà kính (GHG) chính xác khi doanh nghiệp thay thế nhựa nguyên sinh bằng hạt nhựa tái sinh rPET/rHDPE REPLAST.
+                        </p>
+                        <ul class="text-xs text-slate-500 space-y-2">
+                            <li class="flex items-center space-x-1.5"><i data-lucide="check-circle" class="w-3.5 h-3.5 text-brand-600"></i><span>Báo cáo kiểm toán carbon</span></li>
+                            <li class="flex items-center space-x-1.5"><i data-lucide="check-circle" class="w-3.5 h-3.5 text-brand-600"></i><span>Nâng cao điểm số ESG</span></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Callout Banner -->
+                <div class="bg-gradient-to-r from-slate-900 via-brand-950 to-slate-900 rounded-3xl p-8 sm:p-12 text-white flex flex-col md:flex-row items-center justify-between">
+                    <div class="max-w-2xl mb-6 md:mb-0">
+                        <h3 class="text-2xl sm:text-3xl font-bold mb-3">Doanh nghiệp của bạn đã sẵn sàng cho quy định EPR?</h3>
+                        <p class="text-slate-300 text-sm leading-relaxed">Hãy kết nối với chuyên gia tư vấn của EcoPlast Group để nhận tài liệu phân tích kỹ thuật và giải pháp tối ưu chi phí bao bì xanh.</p>
+                    </div>
+                    <button onclick="switchTab('contact')" class="bg-eco-accent hover:bg-emerald-400 text-slate-950 font-bold px-8 py-3.5 rounded-xl whitespace-nowrap transition shadow-lg">
+                        Tư Vấn Ngay
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= TAB 5: TIN TỨC & LIÊN HỆ ================= -->
+        <section id="tab-contact" class="tab-content py-16">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+                <!-- News Grid Section -->
+                <div class="mb-20">
+                    <div class="flex items-center justify-between mb-8">
+                        <div>
+                            <span class="text-brand-600 font-semibold text-sm uppercase tracking-wider">Cập Nhật Ngành</span>
+                            <h2 class="text-3xl font-bold text-slate-900">Tin Tức & Hoạt Động Sustainability</h2>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                        <article class="bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-sm hover:shadow-md transition">
+                            <img src="https://images.unsplash.com/photo-1532996122724-e3c354a0b15b?auto=format&fit=crop&q=80&w=600" alt="Chính sách EPR" class="w-full h-48 object-cover">
+                            <div class="p-6">
+                                <span class="text-xs font-semibold text-brand-700 bg-brand-50 px-2.5 py-1 rounded-full">Chính Sách Môi Trường</span>
+                                <h3 class="text-lg font-bold text-slate-900 mt-3 mb-2 hover:text-brand-600 transition cursor-pointer">Lộ trình thực thi trách nhiệm EPR đối với ngành bao bì nhựa tại Việt Nam</h3>
+                                <p class="text-slate-600 text-xs leading-relaxed mb-4">Phân tích chi tiết quy định bắt buộc về tỷ lệ tái chế đối với các nhà sản xuất và nhập khẩu FMCG từ năm 2024...</p>
+                                <span class="text-xs text-slate-400">12 Tháng 10, 2026</span>
+                            </div>
+                        </article>
+
+                        <article class="bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-sm hover:shadow-md transition">
+                            <img src="https://images.unsplash.com/photo-1588600036041-9492167d498d?auto=format&fit=crop&q=80&w=600" alt="Tiến độ REPLAST" class="w-full h-48 object-cover">
+                            <div class="p-6">
+                                <span class="text-xs font-semibold text-brand-700 bg-brand-50 px-2.5 py-1 rounded-full">Dự Án REPLAST</span>
+                                <h3 class="text-lg font-bold text-slate-900 mt-3 mb-2 hover:text-brand-600 transition cursor-pointer">Cập nhật tiến độ lắp đặt dây chuyền đùn tái sinh tại Long An</h3>
+                                <p class="text-slate-600 text-xs leading-relaxed mb-4">Nhà máy REPLAST hoàn thành nghiệm thu hệ thống xử lý nước thải tuần hoàn và đưa vào vận hành thử nghiệm...</p>
+                                <span class="text-xs text-slate-400">28 Tháng 09, 2026</span>
+                            </div>
+                        </article>
+
+                        <article class="bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-sm hover:shadow-md transition">
+                            <img src="https://images.unsplash.com/photo-1605600659873-d808a13e4d2a?auto=format&fit=crop&q=80&w=600" alt="Ứng dụng rPET" class="w-full h-48 object-cover">
+                            <div class="p-6">
+                                <span class="text-xs font-semibold text-brand-700 bg-brand-50 px-2.5 py-1 rounded-full">Xu Hướng B2B</span>
+                                <h3 class="text-lg font-bold text-slate-900 mt-3 mb-2 hover:text-brand-600 transition cursor-pointer">Giải pháp vượt rào cản kỹ thuật cho bao bì xuất khẩu sang EU</h3>
+                                <p class="text-slate-600 text-xs leading-relaxed mb-4">Sử dụng hạt nhựa tái sinh rPET đạt tiêu chuẩn kiểm định độ tinh khiết giúp doanh nghiệp mở rộng thị phần quốc tế...</p>
+                                <span class="text-xs text-slate-400">15 Tháng 08, 2026</span>
+                            </div>
+                        </article>
+                    </div>
+                </div>
+
+                <!-- Contact Form & Info Grid -->
+                <div class="bg-white rounded-3xl border border-slate-200 shadow-xl overflow-hidden" id="contact-form-section">
+                    <div class="grid grid-cols-1 lg:grid-cols-12">
+                        <!-- Left Info Panel -->
+                        <div class="lg:col-span-5 bg-slate-900 text-white p-8 sm:p-12 flex flex-col justify-between">
+                            <div>
+                                <span class="text-eco-accent font-semibold text-xs uppercase tracking-wider">Kết Nối B2B</span>
+                                <h2 class="text-3xl font-bold mt-2 mb-6">Thông Tin Liên Hệ EcoPlast Group</h2>
+                                <p class="text-slate-300 text-sm mb-8 leading-relaxed">
+                                    Quý doanh nghiệp có nhu cầu nhận báo giá, catalogue kỹ thuật hoặc đăng ký nhận mẫu thử hạt nhựa rPET/rHDPE xin vui lòng điền thông tin bên dưới hoặc liên hệ trực tiếp.
+                                </p>
+
+                                <div class="space-y-6 text-sm">
+                                    <div class="flex items-start space-x-4">
+                                        <div class="p-2.5 bg-slate-800 rounded-xl text-eco-accent">
+                                            <i data-lucide="map-pin" class="w-5 h-5"></i>
+                                        </div>
+                                        <div>
+                                            <h4 class="font-bold text-slate-200">Địa Chỉ Nhà Máy REPLAST</h4>
+                                            <p class="text-slate-400 text-xs mt-1">Cụm công nghiệp Nhựa Đức Hòa Hạ, xã Đức Hòa Hạ, huyện Đức Hòa, tỉnh Long An, Việt Nam.</p>
+                                        </div>
+                                    </div>
+
+                                    <div class="flex items-start space-x-4">
+                                        <div class="p-2.5 bg-slate-800 rounded-xl text-eco-accent">
+                                            <i data-lucide="mail" class="w-5 h-5"></i>
+                                        </div>
+                                        <div>
+                                            <h4 class="font-bold text-slate-200">Email Hợp Tác B2B</h4>
+                                            <p class="text-slate-400 text-xs mt-1">contact@ecoplastgroup.vn</p>
+                                        </div>
+                                    </div>
+
+                                    <div class="flex items-start space-x-4">
+                                        <div class="p-2.5 bg-slate-800 rounded-xl text-eco-accent">
+                                            <i data-lucide="phone" class="w-5 h-5"></i>
+                                        </div>
+                                        <div>
+                                            <h4 class="font-bold text-slate-200">Hotline Kinh Doanh</h4>
+                                            <p class="text-slate-400 text-xs mt-1">(+84) 0272 388 XXXX / (+84) 090 8XX XXXX</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="pt-8 mt-8 border-t border-slate-800">
+                                <p class="text-xs text-slate-400">Giờ làm việc: Thứ Hai - Thứ Bảy (08:00 - 17:00)</p>
+                            </div>
+                        </div>
+
+                        <!-- Right Form Panel -->
+                        <div class="lg:col-span-7 p-8 sm:p-12">
+                            <h3 class="text-2xl font-bold text-slate-900 mb-2">Gửi Yêu Cầu Cho Chúng Tôi</h3>
+                            <p class="text-slate-500 text-sm mb-6">Đội ngũ kỹ thuật EcoPlast Group sẽ phản hồi trong vòng 24 giờ làm việc.</p>
+
+                            <form id="mainContactForm" onsubmit="handleFormSubmit(event)" class="space-y-4">
+                                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                    <div>
+                                        <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Tên Công Ty *</label>
+                                        <input type="text" required placeholder="Ví dụ: Tập đoàn Bao bì FMCG" class="w-full px-4 py-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none text-sm">
+                                    </div>
+                                    <div>
+                                        <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Họ & Tên Người Liên Hệ *</label>
+                                        <input type="text" required placeholder="Nguyễn Văn A" class="w-full px-4 py-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none text-sm">
+                                    </div>
+                                </div>
+
+                                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                    <div>
+                                        <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Email Công Ty *</label>
+                                        <input type="email" required placeholder="contact@company.com" class="w-full px-4 py-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none text-sm">
+                                    </div>
+                                    <div>
+                                        <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Số Điện Thoại *</label>
+                                        <input type="tel" required placeholder="0901234567" class="w-full px-4 py-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none text-sm">
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Sản Phẩm Quan Tâm</label>
+                                    <select id="form-product-select" class="w-full px-4 py-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none text-sm bg-white">
+                                        <option value="Hạt nhựa rPET">Hạt nhựa tái sinh rPET (Recycled PET)</option>
+                                        <option value="Hạt nhựa rHDPE">Hạt nhựa tái sinh rHDPE (Recycled HDPE)</option>
+                                        <option value="Tư vấn EPR">Tư vấn báo cáo & chứng nhận EPR</option>
+                                        <option value="Khác">Khác / Yêu cầu hợp tác cung ứng</option>
+                                    </select>
+                                </div>
+
+                                <div>
+                                    <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Nội Dung Chi Tiết / Yêu Cầu Mẫu Thử</label>
+                                    <textarea rows="4" placeholder="Vui lòng mô tả yêu cầu về thông số kỹ thuật (MFI, IV) hoặc sản lượng dự kiến..." class="w-full px-4 py-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none text-sm"></textarea>
+                                </div>
+
+                                <div class="pt-2">
+                                    <button type="submit" class="w-full bg-brand-600 hover:bg-brand-700 text-white font-bold py-3 rounded-xl transition shadow-md shadow-brand-900/20 flex items-center justify-center space-x-2">
+                                        <i data-lucide="send" class="w-4 h-4"></i>
+                                        <span>Gửi Yêu Cầu Hợp Tác B2B</span>
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+    </main>
+
+    <!-- MODAL DIALOG (Sample Request) -->
+    <div id="sampleModal" class="fixed inset-0 bg-slate-900/70 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-3xl max-w-lg w-full p-6 sm:p-8 relative shadow-2xl border border-slate-100">
+            <button onclick="closeModal()" class="absolute top-5 right-5 text-slate-400 hover:text-slate-600 p-1">
+                <i data-lucide="x" class="w-6 h-6"></i>
+            </button>
+
+            <div class="mb-6">
+                <span class="text-xs font-bold text-brand-600 uppercase tracking-wider">Đăng Ký Nhận Mẫu Thử</span>
+                <h3 class="text-2xl font-bold text-slate-900 mt-1" id="modalProductTitle">Yêu Cầu Mẫu Hạt Nhựa Tái Sinh</h3>
+                <p class="text-xs text-slate-500 mt-1">Chúng tôi gửi mẫu thử miễn phí cho phòng R&D / Kiểm định của doanh nghiệp.</p>
+            </div>
+
+            <form onsubmit="handleModalSubmit(event)" class="space-y-4">
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Tên Doanh Nghiệp *</label>
+                    <input type="text" required placeholder="Tên công ty của bạn" class="w-full px-3.5 py-2 rounded-lg border border-slate-300 text-sm focus:ring-2 focus:ring-brand-500 outline-none">
+                </div>
+
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Người Nhận *</label>
+                        <input type="text" required placeholder="Họ và tên" class="w-full px-3.5 py-2 rounded-lg border border-slate-300 text-sm focus:ring-2 focus:ring-brand-500 outline-none">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-slate-700 uppercase mb-1">SĐT Nhận Mẫu *</label>
+                        <input type="tel" required placeholder="090XXXXXXX" class="w-full px-3.5 py-2 rounded-lg border border-slate-300 text-sm focus:ring-2 focus:ring-brand-500 outline-none">
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Địa Chỉ Gửi Mẫu *</label>
+                    <input type="text" required placeholder="Địa chỉ nhà máy hoặc phòng Lab" class="w-full px-3.5 py-2 rounded-lg border border-slate-300 text-sm focus:ring-2 focus:ring-brand-500 outline-none">
+                </div>
+
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Sản Lượng Nhu Cầu Dự Kiến (Tấn/Tháng)</label>
+                    <input type="number" placeholder="Ví dụ: 20" class="w-full px-3.5 py-2 rounded-lg border border-slate-300 text-sm focus:ring-2 focus:ring-brand-500 outline-none">
+                </div>
+
+                <button type="submit" class="w-full bg-brand-600 hover:bg-brand-700 text-white font-bold py-3 rounded-xl transition mt-2 text-sm">
+                    Xác Nhận Đăng Ký
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- NOTIFICATION TOAST -->
+    <div id="toast" class="fixed bottom-6 right-6 bg-slate-900 text-white px-5 py-3.5 rounded-2xl shadow-2xl border border-slate-700 hidden items-center space-x-3 z-50">
+        <div class="w-8 h-8 rounded-full bg-eco-accent text-slate-950 flex items-center justify-center font-bold">
+            <i data-lucide="check" class="w-5 h-5"></i>
+        </div>
+        <div>
+            <h5 class="text-sm font-bold text-white">Gửi thành công!</h5>
+            <p class="text-xs text-slate-300" id="toastMessage">Yêu cầu của quý khách đã được ghi nhận.</p>
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="bg-slate-950 text-slate-400 py-12 border-t border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-12">
+                
+                <div class="md:col-span-1">
+                    <div class="flex items-center space-x-3 mb-4">
+                        <div class="w-8 h-8 rounded-lg bg-brand-500 flex items-center justify-center text-white font-bold">
+                            <i data-lucide="recycle" class="w-5 h-5"></i>
+                        </div>
+                        <span class="text-lg font-bold text-white tracking-tight">EcoPlast<span class="text-eco-accent">Group</span></span>
+                    </div>
+                    <p class="text-xs text-slate-400 leading-relaxed mb-4">
+                        Kiến tạo vòng đời mới cho nhựa tái sinh. Tiên phong đồng hành cùng mục tiêu phát triển bền vững và Kinh tế tuần hoàn tại Việt Nam.
+                    </p>
+                </div>
+
+                <div>
+                    <h4 class="text-sm font-bold text-slate-200 mb-4 uppercase tracking-wider">Danh Mục Nav</h4>
+                    <ul class="space-y-2 text-xs">
+                        <li><button onclick="switchTab('home')" class="hover:text-eco-accent transition">Trang Chủ</button></li>
+                        <li><button onclick="switchTab('about')" class="hover:text-eco-accent transition">Giới Thiệu Dự Án REPLAST</button></li>
+                        <li><button onclick="switchTab('products')" class="hover:text-eco-accent transition">Sản Phẩm rPET / rHDPE</button></li>
+                        <li><button onclick="switchTab('services')" class="hover:text-eco-accent transition">Dịch Vụ & EPR</button></li>
+                        <li><button onclick="switchTab('contact')" class="hover:text-eco-accent transition">Liên Hệ B2B</button></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="text-sm font-bold text-slate-200 mb-4 uppercase tracking-wider">Nhà Máy REPLAST</h4>
+                    <p class="text-xs text-slate-400 leading-relaxed mb-2">
+                        CCN Nhựa Đức Hòa Hạ, xã Đức Hòa Hạ, huyện Đức Hòa, tỉnh Long An.
+                    </p>
+                    <p class="text-xs text-slate-400">Diện tích: 20.000 m²</p>
+                    <p class="text-xs text-slate-400">Công suất: 15.000 tấn/năm</p>
+                </div>
+
+                <div>
+                    <h4 class="text-sm font-bold text-slate-200 mb-4 uppercase tracking-wider">Pháp Lý & Cam Kết</h4>
+                    <ul class="space-y-2 text-xs text-slate-400">
+                        <li>• Giấy phép Môi trường đầy đủ</li>
+                        <li>• Tiêu chuẩn độ tinh khiết B2B</li>
+                        <li>• Đáp ứng quy định EPR Luật BVMT</li>
+                        <li>• Truy xuất nguồn gốc hạt nhựa</li>
+                    </ul>
+                </div>
+
+            </div>
+
+            <div class="pt-8 border-t border-slate-900 flex flex-col sm:flex-row items-center justify-between text-xs text-slate-500">
+                <p>&copy; 2026 EcoPlast Group. Tất cả quyền được bảo lưu. Dự án Nhà máy REPLAST Long An.</p>
+                <div class="mt-4 sm:mt-0 flex space-x-6">
+                    <span class="hover:text-slate-400 cursor-pointer">Bảo mật thông tin B2B</span>
+                    <span class="hover:text-slate-400 cursor-pointer">Điều khoản hợp tác</span>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JAVASCRIPT APP LOGIC -->
+    <script>
+        // Initialize Lucide Icons
+        lucide.createIcons();
+
+        // TAB SWITCHING FUNCTIONALITY
+        function switchTab(tabId) {
+            // Hide all tabs
+            const tabs = document.querySelectorAll('.tab-content');
+            tabs.forEach(tab => tab.classList.remove('active'));
+
+            // Show target tab
+            const targetTab = document.getElementById('tab-' + tabId);
+            if (targetTab) {
+                targetTab.classList.add('active');
+            }
+
+            // Update nav active state
+            const navLinks = document.querySelectorAll('.nav-link');
+            navLinks.forEach(link => link.classList.remove('active-link'));
+            
+            const activeNav = document.getElementById('nav-' + tabId);
+            if (activeNav) {
+                activeNav.classList.add('active-link');
+            }
+
+            // Close mobile menu if open
+            const mobileMenu = document.getElementById('mobile-menu');
+            mobileMenu.classList.add('hidden');
+
+            // Scroll to top smooth
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // MOBILE MENU TOGGLE
+        function toggleMobileMenu() {
+            const mobileMenu = document.getElementById('mobile-menu');
+            mobileMenu.classList.toggle('hidden');
+        }
+
+        // MODAL HANDLERS
+        function openModal(productName) {
+            const modal = document.getElementById('sampleModal');
+            const modalTitle = document.getElementById('modalProductTitle');
+            if (productName) {
+                modalTitle.innerText = 'Đăng Ký Nhận Mẫu: ' + productName;
+            }
+            modal.classList.remove('hidden');
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('sampleModal');
+            modal.classList.add('hidden');
+        }
+
+        // FORM SUBMISSION HANDLERS
+        function handleFormSubmit(e) {
+            e.preventDefault();
+            showToast('Yêu cầu báo giá B2B đã được gửi đến EcoPlast Group.');
+            e.target.reset();
+        }
+
+        function handleModalSubmit(e) {
+            e.preventDefault();
+            closeModal();
+            showToast('Đã ghi nhận thông tin đăng ký nhận mẫu thử.');
+            e.target.reset();
+        }
+
+        // TOAST NOTIFICATION HANDLER
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            const toastMessage = document.getElementById('toastMessage');
+            toastMessage.innerText = message;
+            
+            toast.classList.remove('hidden');
+            toast.classList.add('flex');
+
+            setTimeout(() => {
+                toast.classList.add('hidden');
+                toast.classList.remove('flex');
+            }, 4000);
+        }
+    </script>
+</body>
+</html>
